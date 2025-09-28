@@ -9,8 +9,8 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: #fafafa;
-  color: #333;
+  background-color: #1a1a1a;
+  color: white;
   line-height: 1.4;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -26,8 +26,8 @@ body {
 .app-header {
   padding: 1rem;
   text-align: center;
-  background: white;
-  border-bottom: 1px solid #e1e1e1;
+  background: #2a2a2a;
+  border-bottom: 1px solid #333;
 }
 
 .app-header h1 {
@@ -126,14 +126,13 @@ body {
   background: #007acc;
 }
 
-/* Stories List */
+/* Stories List - Instagram Style */
 .stories-list-container {
   position: relative;
   padding: 1rem;
-  background: white;
-  border-bottom: 1px solid #e1e1e1;
+  background: #1a1a1a;
+  border-bottom: 1px solid #333;
 }
-
 
 .stories-list {
   display: flex;
@@ -148,67 +147,78 @@ body {
   display: none;
 }
 
-.story-thumbnail {
-  flex-shrink: 0;
+.story-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: all 0.2s ease;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  min-width: 4rem;
 }
 
-.story-thumbnail:hover {
-  transform: scale(1.05);
+.story-card:hover {
+  background: rgba(255, 255, 255, 0.05);
 }
 
-.thumbnail-wrapper {
+.story-card-avatar {
   position: relative;
-  width: 5rem;
-  height: 5rem;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 0.125rem solid #e1e1e1;
-  background: white;
-  transition: border-color 0.2s ease;
+  width: 3rem;
+  height: 3rem;
+  flex-shrink: 0;
 }
 
-.thumbnail-wrapper.unviewed {
-  border-color: #ff3040;
-  box-shadow: 0 0 0 0.125rem rgba(255, 48, 64, 0.3);
-}
-
-.thumbnail-image {
+.avatar-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-}
-
-.thumbnail-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-  padding: 0.5rem;
-  display: none;
-}
-
-.thumbnail-avatar {
-  width: 1.5rem;
-  height: 1.5rem;
   border-radius: 50%;
-  border: 0.125rem solid white;
-  position: absolute;
-  top: -0.75rem;
-  left: 50%;
-  transform: translateX(-50%);
+  object-fit: cover;
+  border: 2px solid #444;
 }
 
-.thumbnail-username,
-.thumbnail-time {
-  display: block;
-  font-size: 0.625rem;
-  color: white;
+.unviewed-ring {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid #ff3040;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.story-card-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.125rem;
   text-align: center;
+}
+
+.story-username {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: white;
+  line-height: 1.2;
+  max-width: 4rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.story-timestamp {
+  font-size: 0.625rem;
+  color: #999;
   line-height: 1.2;
 }
+
 
 /* Story Viewer Overlay */
 .story-viewer-overlay {
@@ -266,6 +276,16 @@ body {
   background: rgba(255, 255, 255, 0.5);
 }
 
+.progress-bar.active.paused {
+  background: rgba(255, 48, 64, 0.5);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
 .progress-fill {
   height: 100%;
   background: white;
@@ -309,6 +329,61 @@ body {
 .story-timestamp {
   font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.8);
+}
+
+.story-music-info {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.125rem;
+}
+
+.music-icon {
+  font-size: 0.75rem;
+}
+
+.music-text {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.story-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.story-pause-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+  transition: all 0.2s;
+  backdrop-filter: blur(10px);
+}
+
+.story-pause-btn:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.story-pause-btn.paused {
+  background: rgba(255, 48, 64, 0.8);
+}
+
+.story-pause-btn.paused:hover {
+  background: rgba(255, 48, 64, 1);
 }
 
 .story-close-btn {

@@ -3,9 +3,9 @@ import { formatTimeAgo } from '../utils/helpers';
 
 /**
  * Header component for story viewer
- * Shows user info and close button
+ * Shows user info, controls, and close button
  */
-const StoryHeader = ({ story, onClose }) => {
+const StoryHeader = ({ story, onClose, isPaused, onTogglePause }) => {
   return (
     <div className="story-header">
       <div className="story-user">
@@ -17,11 +17,20 @@ const StoryHeader = ({ story, onClose }) => {
         <div className="story-user-info">
           <span className="story-username">{story.user.name}</span>
           <span className="story-timestamp">{formatTimeAgo(story.timestamp)}</span>
+          <div className="story-music-info">
+            <span className="music-icon">🎵</span>
+            <span className="music-text">Zubeen · Jaane Kya</span>
+          </div>
         </div>
       </div>
-      <button className="story-close-btn" onClick={onClose}>
-        ✕
-      </button>
+      <div className="story-controls">
+        <button className="story-pause-btn" onClick={onTogglePause}>
+          {isPaused ? '▶️' : '⏸️'}
+        </button>
+        <button className="story-close-btn" onClick={onClose}>
+          ✕
+        </button>
+      </div>
     </div>
   );
 };
