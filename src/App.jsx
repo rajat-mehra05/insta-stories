@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import './App.css';
 import StoriesList from './components/StoriesList';
-import StoryViewer from './components/StoryViewer';
+import StoryWrapper from './components/StoryWrapper';
 import { stories } from './data/stories';
 import { isMobile as checkIsMobile, fetchStoriesData } from './utils/helpers';
 
@@ -115,7 +115,7 @@ function App() {
       </main>
 
       {viewerOpen && (
-        <StoryViewer
+        <StoryWrapper
           stories={storyData}
           initialIndex={currentStoryIndex}
           onClose={handleCloseViewer}

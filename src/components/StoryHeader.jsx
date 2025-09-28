@@ -17,10 +17,6 @@ const StoryHeader = ({ story, onClose, isPaused, onTogglePause }) => {
         <div className="story-user-info">
           <span className="story-username">{story.user.name}</span>
           <span className="story-timestamp">{formatTimeAgo(story.timestamp)}</span>
-          <div className="story-music-info">
-            <span className="music-icon">🎵</span>
-            <span className="music-text">Zubeen · Jaane Kya</span>
-          </div>
         </div>
       </div>
       <div className="story-controls">

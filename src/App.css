@@ -220,7 +220,151 @@ body {
 }
 
 
-/* Story Viewer Overlay */
+/* Story Wrapper Overlay - Instagram Style */
+.story-wrapper-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #2a2a2a;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.story-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 100vw;
+  max-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.story-main {
+  position: relative;
+  width: 100%;
+  max-width: 375px;
+  height: 667px;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.story-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: black;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Story Previews */
+.story-preview {
+  position: relative;
+  width: 200px;
+  height: 300px;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 0.8;
+  z-index: 5;
+}
+
+.story-preview:hover {
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+.preview-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.preview-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.preview-user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.preview-avatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.preview-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.preview-username {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  line-height: 1.2;
+}
+
+.preview-timestamp {
+  font-size: 0.625rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.2;
+}
+
+.preview-arrow {
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: bold;
+  align-self: flex-end;
+  margin-top: auto;
+}
+
+.story-preview-left {
+  justify-self: flex-start;
+}
+
+.story-preview-right {
+  justify-self: flex-end;
+  margin-left: auto;
+}
+
+/* Story Viewer Overlay - Keep for backward compatibility */
 .story-viewer-overlay {
   position: fixed;
   top: 0;
@@ -299,7 +443,8 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 0 1rem 1rem;
-  z-index: 10;
+  z-index: 15;
+  position: relative;
 }
 
 .story-user {
@@ -445,6 +590,17 @@ body {
   opacity: 0;
 }
 
+.story-video {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: opacity 0.3s ease;
+}
+
+.story-video.hidden {
+  opacity: 0;
+}
+
 /* Navigation */
 .story-navigation {
   position: absolute;
@@ -493,6 +649,41 @@ body {
 
 /* Mobile Optimizations */
 @media (max-width: 768px) {
+  .story-wrapper {
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .story-main {
+    max-width: 100%;
+    height: 100vh;
+  }
+
+  .story-preview {
+    width: 120px;
+    height: 180px;
+  }
+
+  .preview-overlay {
+    padding: 0.5rem;
+  }
+
+  .preview-avatar {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .preview-username {
+    font-size: 0.625rem;
+  }
+
+  .preview-timestamp {
+    font-size: 0.5rem;
+  }
+
+  .preview-arrow {
+    font-size: 1.5rem;
+  }
 
   .story-viewer-overlay {
     padding: 0;

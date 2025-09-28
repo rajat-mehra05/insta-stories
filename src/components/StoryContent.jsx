@@ -18,6 +18,17 @@ const StoryContent = ({ story, isLoading, imageError, onImageLoad, onImageError 
           <div className="error-icon">⚠️</div>
           <p>Failed to load story</p>
         </div>
+      ) : story.videoUrl ? (
+        <video
+          src={story.videoUrl}
+          className={`story-video ${isLoading ? 'hidden' : ''}`}
+          onLoadedData={onImageLoad}
+          onError={onImageError}
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
       ) : (
         <img
           src={story.imageUrl}

@@ -14,6 +14,7 @@ export const stories = [
     id: 2,
     imageUrl: "https://picsum.photos/800/1200?random=2",
     thumbnailUrl: "https://picsum.photos/150/150?random=2",
+    videoUrl: "/dummy-video.mp4",
     user: {
       name: "John Doe",
       avatar: "https://picsum.photos/50/50?random=1",
@@ -64,6 +65,7 @@ export const stories = [
     id: 7,
     imageUrl: "https://picsum.photos/800/1200?random=7",
     thumbnailUrl: "https://picsum.photos/150/150?random=7",
+    videoUrl: "/dummy-video.mp4",
     user: {
       name: "Mike Johnson",
       avatar: "https://picsum.photos/50/50?random=3",
