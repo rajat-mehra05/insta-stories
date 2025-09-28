@@ -14,11 +14,15 @@ const StoryViewer = ({ stories, initialIndex, onClose, onMarkViewed }) => {
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
 
   const timerRef = useRef(null);
   const progressRef = useRef(null);
   const viewerRef = useRef(null);
   const startTimeRef = useRef(null);
+  const pauseTimeRef = useRef(null);
+  const totalPauseTimeRef = useRef(0);
+  const isPausedRef = useRef(false);
 
   const currentStory = stories[currentIndex];
   const STORY_DURATION = 5000; // 5 seconds
@@ -30,25 +34,75 @@ const StoryViewer = ({ stories, initialIndex, onClose, onMarkViewed }) => {
     if (progressRef.current) clearInterval(progressRef.current);
 
     startTimeRef.current = Date.now();
+    totalPauseTimeRef.current = 0;
 
-    timerRef.current = setTimeout(() => {
-      if (currentIndex < stories.length - 1) {
-        setCurrentIndex(prev => prev + 1);
-        setProgress(0);
-        setIsLoading(true);
-        setImageError(false);
-      } else {
-        onClose();
-      }
-    }, STORY_DURATION);
+    // Start the main story timer
+    const startMainTimer = () => {
+      timerRef.current = setTimeout(() => {
+        if (currentIndex < stories.length - 1) {
+          setCurrentIndex(prev => prev + 1);
+          setProgress(0);
+          setIsLoading(true);
+          setImageError(false);
+        } else {
+          onClose();
+        }
+      }, STORY_DURATION);
+    };
 
+    startMainTimer();
+
+    // Start progress tracking
     progressRef.current = setInterval(() => {
-      if (startTimeRef.current) {
-        const elapsed = Date.now() - startTimeRef.current;
+      if (startTimeRef.current && !isPausedRef.current) {
+        const elapsed = Date.now() - startTimeRef.current - totalPauseTimeRef.current;
         const newProgress = (elapsed / STORY_DURATION) * 100;
         setProgress(Math.min(newProgress, 100));
       }
     }, 50);
+  };
+
+  // Pause/Resume functionality
+  const togglePause = () => {
+    if (isPaused) {
+      // Resume - immediately resume
+      if (pauseTimeRef.current) {
+        totalPauseTimeRef.current += Date.now() - pauseTimeRef.current;
+        pauseTimeRef.current = null;
+      }
+      setIsPaused(false);
+      isPausedRef.current = false;
+      
+      // Restart the main timer with remaining time
+      if (startTimeRef.current) {
+        const elapsed = Date.now() - startTimeRef.current - totalPauseTimeRef.current;
+        const remainingTime = STORY_DURATION - elapsed;
+        
+        if (remainingTime > 0) {
+          timerRef.current = setTimeout(() => {
+            if (currentIndex < stories.length - 1) {
+              setCurrentIndex(prev => prev + 1);
+              setProgress(0);
+              setIsLoading(true);
+              setImageError(false);
+            } else {
+              onClose();
+            }
+          }, remainingTime);
+        }
+      }
+    } else {
+      // Pause - immediately pause
+      pauseTimeRef.current = Date.now();
+      setIsPaused(true);
+      isPausedRef.current = true;
+      
+      // Clear the main timer immediately
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+    }
   };
 
   // Cleanup timers when component unmounts
@@ -91,6 +145,10 @@ const StoryViewer = ({ stories, initialIndex, onClose, onMarkViewed }) => {
       setProgress(0);
       setIsLoading(true);
       setImageError(false);
+      setIsPaused(false);
+      isPausedRef.current = false;
+      totalPauseTimeRef.current = 0;
+      pauseTimeRef.current = null;
     }
   }, [currentIndex]);
 
@@ -104,6 +162,10 @@ const StoryViewer = ({ stories, initialIndex, onClose, onMarkViewed }) => {
       setProgress(0);
       setIsLoading(true);
       setImageError(false);
+      setIsPaused(false);
+      isPausedRef.current = false;
+      totalPauseTimeRef.current = 0;
+      pauseTimeRef.current = null;
     } else {
       onClose();
     }
@@ -159,8 +221,14 @@ const StoryViewer = ({ stories, initialIndex, onClose, onMarkViewed }) => {
           totalStories={stories.length}
           currentIndex={currentIndex}
           progress={progress}
+          isPaused={isPaused}
         />
-        <StoryHeader story={currentStory} onClose={onClose} />
+        <StoryHeader 
+          story={currentStory} 
+          onClose={onClose}
+          isPaused={isPaused}
+          onTogglePause={togglePause}
+        />
         <StoryContent
           story={currentStory}
           isLoading={isLoading}
