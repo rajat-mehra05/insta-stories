@@ -1,3 +1,16 @@
+# Preview
+
+### Before viewing the stories:
+
+<img width="432" height="195" alt="image" src="https://github.com/user-attachments/assets/30488879-ece1-40ec-be1d-724de9307955" />
+
+<br />
+
+### After viewing the stories:
+
+<img width="433" height="202" alt="image" src="https://github.com/user-attachments/assets/397fb064-a901-4c81-a73a-afc3e81126aa" />
+
+
 # Instagram Stories
 
 A modern Instagram Stories feature built with React 19 and vanilla CSS. This mobile-exclusive application provides a complete story viewing experience with advanced touch navigation, pause/resume controls, and real-time progress tracking. Features include video support, smart auto-advance, and comprehensive error handling.
